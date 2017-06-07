@@ -4,6 +4,8 @@
 
 package Ahorcado;
 
+import java.util.Scanner;
+
 import Ahorcado.Horca;
 import Ahorcado.Palabra;
 
@@ -15,35 +17,90 @@ public class Partida {
 	/**
 	 * 
 	 */
-	public Horca horca;
+	public static Horca horca;
 	/**
 	 * 
 	 */
-	public Palabra palabra;
+	public static Palabra palabra;
 
 	/**
 	 * 
 	 */
-	public void mostrarProgreso() {
+	public static void mostrarProgreso() {
+		horca.dibujar();
+		palabra.mostrarResultados();
 	}
 
 	/**
 	 * 
-	 * @return letra 
+	 * @return letra
+	 * 
 	 */
-	public char pedirLetra() {
+
+	public static char pedirLetra() {
+		Scanner entrada = new Scanner(System.in);
+		System.out.println("introduce una letra");
+		return entrada.nextLine().charAt(0);
 	}
 
 	/**
-	 * 
+	 * pide la respuesta return palbra true si era la que buscabamos o false en
+	 * caso contrario
 	 */
-	public void resolver() {
+	public static boolean resolver() {
+		Scanner entrada = new Scanner(System.in);
+		System.out.println("introduce la palabra");
+		return palabra.comprobarPalabra(entrada.nextLine());
 	}
 
 	/**
+	 * compruerba tanto si hemos agotado los fallos como si hemos acertado
 	 * 
-	 * @return fin 
+	 * @return fin
 	 */
-	public boolean comprobarFinal() {
+	public static boolean comprobarFinal() {
+		return horca.comprobarSiPerdido() || palabra.comprobarSiGanado();
+	}
+
+	public static int elegirDelMenu() {
+		Scanner entrada = new Scanner(System.in);
+		System.out.println("Elige una opcion");
+		System.out.println("1. letra");
+		System.out.println("2.Resolver");
+		System.out.println("3. Abandonar");
+		return entrada.nextInt();
+
+	}
+
+	public static void main (String []args){
+		horca =new Horca();
+	    palabra =new Palabra();
+		boolean noHaResueltoMal =true;
+		palabra.elegirPalabra();
+		while (!comprobarFinal() && noHaResueltoMal){
+			switch (elegirDelMenu()){
+			case 1:
+				if (!palabra.comprobarLetra(pedirLetra())) horca.incrementarFallo();
+				
+				mostrarProgreso();
+			break;
+			case 2 : if (resolver()){
+				System.out.println("Has ganado");
+			}
+				else{
+					System.out.println("Lo siento, as perdido");
+					noHaResueltoMal =false;
+					
+			}
+				break;
+			case 3 :
+				System.exit(0);
+				default:
+				break;
+				
+			}
+			
+		}
+		
 	}
 };

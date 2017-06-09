@@ -63,13 +63,22 @@ public class Partida {
 	}
 
 	public static int elegirDelMenu() {
-		Scanner entrada = new Scanner(System.in);
-		System.out.println("Elige una opcion");
-		System.out.println("1. letra");
-		System.out.println("2.Resolver");
-		System.out.println("3. Abandonar");
-		return entrada.nextInt();
+		int valor = 0;
+		try {
 
+			Scanner entrada = new Scanner(System.in);
+			System.out.println("Elige una opcion");
+			System.out.println("1.letra");
+			System.out.println("2.Resolver");
+			System.out.println("3.Abandonar");
+			valor= entrada.nextInt();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("\n____________________\n introduce un numero\n____________________\n");
+		}
+
+		return valor;
 	}
 
 	public static void main (String []args){

@@ -71,8 +71,8 @@ public class Partida {
 			System.out.println("1.letra");
 			System.out.println("2.Resolver");
 			System.out.println("3.Abandonar");
-			valor= entrada.nextInt();
-			
+			valor = entrada.nextInt();
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("\n____________________\n introduce un numero\n____________________\n");
@@ -81,35 +81,35 @@ public class Partida {
 		return valor;
 	}
 
-	public static void main (String []args){
-		horca =new Horca();
-	    palabra =new Palabra();
-		boolean noHaResueltoMal =true;
+	public static void main(String[] args) {
+		horca = new Horca();
+		palabra = new Palabra();
+		boolean noHaResueltoMal = true;
 		palabra.elegirPalabra();
-		while (!comprobarFinal() && noHaResueltoMal){
-			switch (elegirDelMenu()){
+		while (!comprobarFinal() && noHaResueltoMal) {
+			switch (elegirDelMenu()) {
 			case 1:
-				if (!palabra.comprobarLetra(pedirLetra())) horca.incrementarFallo();
-				
+				if (!palabra.comprobarLetra(pedirLetra()))
+					horca.incrementarFallo();
+
 				mostrarProgreso();
-			break;
-			case 2 : if (resolver()){
-				System.out.println("Has ganado");
-			}
-				else{
-					System.out.println("Lo siento, as perdido");
-					noHaResueltoMal =false;
-					
-			}
+
 				break;
-			case 3 :
+			case 2:
+				if (resolver() == false)
+					noHaResueltoMal = false;
+				break;
+			case 3:
 				System.exit(0);
-				default:
+			default:
 				break;
-				
+
 			}
-			
+
 		}
-		
+		if (horca.comprobarSiPerdido() || !noHaResueltoMal)
+			System.out.println("Has perdido");
+		if (palabra.comprobarSiGanado() || noHaResueltoMal)
+			System.out.println("Has ganado");
 	}
 };
